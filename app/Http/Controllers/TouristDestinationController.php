@@ -35,8 +35,7 @@ class TouristDestinationController extends Controller
             'image_urls.*' => 'url',
             'is_open' => 'required|boolean',
         ]);
-        session()->flash('image_urls', $request->input('image_urls'));
-
+        
         $tourist_destination = new TouristDestination;
         $tourist_destination->name = $request->name;
         $tourist_destination->description = $request->description;
@@ -46,9 +45,8 @@ class TouristDestinationController extends Controller
         $tourist_destination->ticket_price = $request->ticket_price;
         $tourist_destination->image_urls = json_encode($request->image_urls);
         $tourist_destination->is_open = $request->is_open;
-
-
-
+        
+        
         //save image_asset
         if ($request->hasFile('image_asset')) {
             $image = $request->file('image_asset');
@@ -58,10 +56,10 @@ class TouristDestinationController extends Controller
             $tourist_destination->image_asset = $imageName;
         }
         $tourist_destination->save();
+        session()->flash('image_urls', $request->input('image_urls'));
 
         return redirect()->route('tourist-destinations.index')->with('success', 'Tourist Destination created successfully');
     }
-
 
     //show
     public function show($id)

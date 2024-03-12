@@ -129,7 +129,8 @@
                                     @endphp
                                     @foreach ($imageUrls as $image)
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" name="image_urls[]">
+                                            <input type="text" class="form-control" name="image_urls[]"
+                                                value="{{ $image }}">
                                             <div class="input-group-append">
                                                 <button class="btn btn-danger remove-image-url"
                                                     type="button">Remove</button>

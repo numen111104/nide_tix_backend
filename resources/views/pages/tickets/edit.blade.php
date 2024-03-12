@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Category Create')
+@section('title', 'Edit Ticket')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -16,68 +16,60 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Advanced Forms</h1>
+                <h1>Edit Ticket</h1>
                 <div class="section-header-breadcrumb">
-                    <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="#">Forms</a></div>
-                    <div class="breadcrumb-item">Category</div>
+                    <div class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></div>
+                    <div class="breadcrumb-item"><a href="{{ route('tickets.index') }}">Tickets</a></div>
+                    <div class="breadcrumb-item active">Edit</div>
                 </div>
             </div>
 
             <div class="section-body">
-                <h2 class="section-title">Category</h2>
-
+                <h2 class="section-title">Ticket</h2>
 
                 <div class="card">
-                    <form action="{{ route('categories.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('tickets.update', $ticket->id) }}" method="POST">
                         @csrf
+                        @method('PUT')
                         <div class="card-header">
-                            <h4>Input Text</h4>
+                            <h4>Ticket Information</h4>
                         </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <label>Name</label>
-                                <input type="text"
-                                    class="form-control @error('name')
-                                is-invalid
-                            @enderror"
-                                    name="name">
-                                @error('name')
+                                <label>User</label>
+                                <select class="form-control" name="user_id">
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->id }}" {{ $user->id == $ticket->user_id ? 'selected' : '' }}>{{ $user->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('user_id')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label>Description</label>
-                                <input type="text"
-                                    class="form-control @error('description')
-                                is-invalid
-                            @enderror"
-                                    name="description">
-                                @error('description')
+                                <label>Tourist Destination</label>
+                                <select class="form-control" name="tourist_destination_id">
+                                    @foreach ($tourist_destinations as $tourist_destination)
+                                        <option value="{{ $tourist_destination->id }}" {{ $tourist_destination->id == $ticket->tourist_destination_id ? 'selected' : '' }}>{{ $tourist_destination->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('tourist_destination_id')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
-
-
                             <div class="form-group">
-                                <label class="form-label">Photo Category</label>
-                                <div class="col-sm-9">
-                                    <input type="file" class="form-control" name="image"
-                                        @error('image') is-invalid @enderror>
-                                </div>
-                                @error('image')
+                                <label>Quantity</label>
+                                <input type="number" class="form-control" name="quantity" value="{{ $ticket->quantity }}">
+                                @error('quantity')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
-
-
-
                         </div>
                         <div class="card-footer text-right">
                             <button class="btn btn-primary">Submit</button>
@@ -91,4 +83,5 @@
 @endsection
 
 @push('scripts')
+    <!-- Place your scripts here -->
 @endpush
