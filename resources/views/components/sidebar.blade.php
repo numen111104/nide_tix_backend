@@ -17,7 +17,7 @@
                         <a class="nav-link" href="{{ route('tourist-destinations.index') }}">Tourist Destinations</a>
                     </li>
                     <li class="{{ Request::is('tickets*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('tickets.index') }}">Tiket</a>
+                        <a class="nav-link" href="{{ route('tickets.index') }}">Tickets</a>
                     </li>
                 </ul>
             </li>
