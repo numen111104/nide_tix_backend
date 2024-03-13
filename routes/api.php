@@ -33,4 +33,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/destinasi', [TouristDestinationController::class, 'getDestinasi']);
+    Route::get('/destinasi/{id}', [TouristDestinationController::class, 'getDestinasiById']);
+
 });

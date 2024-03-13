@@ -29,4 +29,21 @@ class TouristDestinationController extends Controller
         }
         return new ApiResource(true, "All Destinations", $formatted_destinations, 200, 'OK', ['WWW-Authenticate' => 'Bearer']);
     }
+
+    public function getDestinasiById($id) {
+        $tourist_destination = DB::table('tourist_destinations')->where('id', $id)->first();
+        $formatted_destination = [
+            'id' => $tourist_destination->id,
+            'name' => $tourist_destination->name,
+            'description' => $tourist_destination->description,
+            'location' => $tourist_destination->location,
+            'is_open' => $tourist_destination->is_open == 1 ? true : false,
+            'open_days' => $tourist_destination->open_days,
+            'open_time' => $tourist_destination->open_time,
+            'ticket_price' => $tourist_destination->ticket_price,
+            'image_asset' => asset("storage/destinasi/".$tourist_destination->image_asset),
+            'image_urls' => json_decode($tourist_destination->image_urls),
+        ];
+        return new ApiResource(true, "Destination Found", $formatted_destination, 200, 'OK', ['WWW-Authenticate' => 'Bearer']);
+    }
 }
