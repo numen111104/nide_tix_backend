@@ -44,7 +44,7 @@ class TicketController extends Controller
             $total_price = $request->quantity * $tourist_destination->ticket_price;
             $ticket->total_price = $total_price;
         } else {
-            $ticket->total_price = "Free";
+            $ticket->total_price = 0;
         }
         $ticket->save();
         return redirect()->route('tickets.index')->with('success', 'Ticket created successfully');
@@ -75,6 +75,14 @@ class TicketController extends Controller
         $ticket->user_id = $request->user_id;
         $ticket->tourist_destination_id = $request->tourist_destination_id;
         $ticket->quantity = $request->quantity;
+        $ticket->status = "unpaid";
+        $tourist_destination = TouristDestination::find($request->tourist_destination_id);
+        if ($tourist_destination && is_numeric($tourist_destination->ticket_price) && $tourist_destination->ticket_price > 0) {
+            $total_price = $request->quantity * $tourist_destination->ticket_price;
+            $ticket->total_price = $total_price;
+        } else {
+            $ticket->total_price = 0;
+        }
         $ticket->save();
         return redirect()->route('tickets.index')->with('success', 'Ticket updated successfully');
     }

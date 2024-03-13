@@ -35,6 +35,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
+            'role' => 'required|in:admin,user',
             'password' => 'required|min:8',
             'phone' => 'required|numeric|unique:users',
             'address' => 'required',
@@ -47,6 +48,7 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
         $user->phone = $request->phone;
         $user->address = $request->address;
+        $user->role = $request->role;
         $user->save();
 
         return redirect()->route('users.index')->with('success', 'User created successfully');
@@ -74,7 +76,8 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required',
             'password' => 'nullable|min:8',
-            'phone' => 'required|numeric|unique:users',
+            'phone' => 'required|numeric',
+            'role' => 'required|in:admin,user',
             'address' => 'required',
         ]);
 
@@ -84,6 +87,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->address = $request->address;
+        $user->role = $request->role;
         $user->save();
 
         //if password is not empty
@@ -91,6 +95,7 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
             $user->save();
         }
+        // Handle the unique phone
 
         return redirect()->route('users.index')->with('success', 'User updated successfully');
     }

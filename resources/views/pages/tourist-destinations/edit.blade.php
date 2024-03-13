@@ -103,7 +103,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Ticket Price</label>
-                                <input type="text"
+                                <input type="number"
                                     class="form-control @error('ticket_price')
                                 is-invalid
                             @enderror"

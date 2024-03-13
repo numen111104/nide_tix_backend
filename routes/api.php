@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\TouristDestinationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,4 +32,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         return $request->user();
     });
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/destinasi', [TouristDestinationController::class, 'getDestinasi']);
 });

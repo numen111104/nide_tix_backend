@@ -93,7 +93,7 @@
                                         class="form-control @error('phone')
                                 is-invalid
                             @enderror"
-                                        name="phone">
+                                        name="phone" value="{{ $user->phone }}">
                                 </div>
                                 @error('phone')
                                     <div class="invalid-feedback">
@@ -109,11 +109,11 @@
                                             <i class="fas fa-home"></i>
                                         </div>
                                     </div>
-                                    <input type="address"
+                                    <input type="text"
                                         class="form-control @error('address')
                                 is-invalid
                             @enderror"
-                                        name="address">
+                                        name="address" value="{{ $user->address }}">
                                 </div>
                                 @error('address')
                                     <div class="invalid-feedback">
@@ -122,10 +122,26 @@
                                 @enderror
                             </div>
 
-                        </div>
-                        <div class="card-footer text-right">
-                            <button class="btn btn-primary">Submit</button>
-                        </div>
+                            <div class="form-group">
+                                <label class="form-label">Role</label>
+                                <div class="selectgroup w-100">
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="role" value="admin" class="selectgroup-input"
+                                            {{ $user->role == 'admin' ? 'checked' : '' }}>
+                                        <span class="selectgroup-button">Admin</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="role" value="user" class="selectgroup-input"
+                                            {{ $user->role == 'user' ? 'checked' : '' }}>
+                                        <span class="selectgroup-button">User</span>
+                                    </label>
+
+                                </div>
+
+                            </div>
+                            <div class="card-footer text-right">
+                                <button class="btn btn-primary">Submit</button>
+                            </div>
                     </form>
                 </div>
 
