@@ -40,12 +40,7 @@ class TicketController extends Controller
         $ticket->status = "unpaid";
 
         $tourist_destination = TouristDestination::find($request->tourist_destination_id);
-        if ($tourist_destination && is_numeric($tourist_destination->ticket_price) && $tourist_destination->ticket_price > 0) {
-            $total_price = $request->quantity * $tourist_destination->ticket_price;
-            $ticket->total_price = $total_price;
-        } else {
-            $ticket->total_price = 0;
-        }
+        $ticket->total_price = $request->quantity * $tourist_destination->ticket_price;
         $ticket->save();
         return redirect()->route('tickets.index')->with('success', 'Ticket created successfully');
     }
@@ -67,8 +62,6 @@ class TicketController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            "user_id" => "required",
-            "tourist_destination_id" => "required",
             "quantity" => "required|numeric",
         ]);
         $ticket = Ticket::findOrFail($id);

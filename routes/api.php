@@ -34,9 +34,17 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
     Route::post('/logout', [AuthController::class, 'logout']);
     //destinasi API
-    Route::get('/destinasi', [TouristDestinationController::class, 'getDestinasi']);
+    Route::get('/destinasi', [TouristDestinationController::class, 'getAllDestinasi']);
     Route::get('/destinasi/{id}', [TouristDestinationController::class, 'getDestinasiById']);
 
     //ticket API
-    Route::get('/info-ticket', [TicketController::class, 'getTicketInfo']);
+    Route::get('/info-ticket', [TicketController::class, 'getAllTicketInfo']);
+    Route::post('/order-ticket', [TicketController::class, 'orderTicket']);
+
+    Route::post('/cancel-ticket/{id}',[TicketController::class, 'cancelTicket']);
+    //update ticket
+    Route::put('/update-ticket/{ticket_id}', [TicketController::class, 'updateTicket']);
+    // Route::post('/scan-ticket', [TicketController::class, 'scanTicket']);
+
+
 });
