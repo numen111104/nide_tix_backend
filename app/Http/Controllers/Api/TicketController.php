@@ -187,10 +187,7 @@ public function generateBookingCode($ticketId)
     if ($ticket->booking_code) {
         return new ApiResource(false, "Booking code already generated", null, 400, 'Bad Request', ['WWW-Authenticate' => 'Bearer']);
     }
-    //Periksa apakah status tiket sudah dicancel
-    if ($ticket->status == "canceled") {
-        return new ApiResource(false, "Ticket already canceled", null, 400, 'Bad Request', ['WWW-Authenticate' => 'Bearer']);
-    }
+
     // Generate booking code
     $bookingCode = "NIDE-" . rand(1, 9) . strtoupper(Str::random(5)) . $ticket->user_id . now()->timestamp . rand(1, 9) . strtoupper(Str::random(2));
     // Simpan booking code ke dalam tiket
@@ -198,5 +195,26 @@ public function generateBookingCode($ticketId)
     $ticket->save();
     return new ApiResource(true, "Booking code generated successfully", ['booking_code' => $bookingCode], 200, 'OK', ['WWW-Authenticate' => 'Bearer']);
 }
-    
+public function markTicketAsUsed($bookingCode)
+{
+    // Temukan tiket berdasarkan booking code
+    $ticket = Ticket::where('booking_code', $bookingCode)->first();
+
+    // Periksa apakah tiket ditemukan
+    if (!$ticket) {
+        return new ApiResource(false, "Ticket not found", null, 404, 'Not Found', ['WWW-Authenticate' => 'Bearer']);
+    }
+
+    // Periksa apakah tiket sudah digunakan sebelumnya
+    if ($ticket->is_used) {
+        return new ApiResource(false, "Ticket already used", null, 400, 'Bad Request', ['WWW-Authenticate' => 'Bearer']);
+    }
+
+    // Tandai tiket sebagai "used"
+    $ticket->is_used = true;
+    $ticket->save();
+
+    return new ApiResource(true, "Ticket marked as used successfully", null, 200, 'OK', ['WWW-Authenticate' => 'Bearer']);
+}
+
 }
