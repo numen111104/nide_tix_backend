@@ -183,6 +183,14 @@ public function generateBookingCode($ticketId)
     if ($ticket->status != "paid") {
         return new ApiResource(false, "Ticket status is not paid yet", null, 400, 'Bad Request', ['WWW-Authenticate' => 'Bearer']);
     }
+    // Periksa apakah tiket sudah ada booking code
+    if ($ticket->booking_code) {
+        return new ApiResource(false, "Booking code already generated", null, 400, 'Bad Request', ['WWW-Authenticate' => 'Bearer']);
+    }
+    //Periksa apakah status tiket sudah dicancel
+    if ($ticket->status == "canceled") {
+        return new ApiResource(false, "Ticket already canceled", null, 400, 'Bad Request', ['WWW-Authenticate' => 'Bearer']);
+    }
     // Generate booking code
     $bookingCode = "NIDE-" . rand(1, 9) . strtoupper(Str::random(5)) . $ticket->user_id . now()->timestamp . rand(1, 9) . strtoupper(Str::random(2));
     // Simpan booking code ke dalam tiket
