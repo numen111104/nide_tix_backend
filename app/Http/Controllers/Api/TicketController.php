@@ -214,7 +214,7 @@ public function markTicketAsUsed($bookingCode)
     $ticket->is_used = true;
     $ticket->save();
 
-    return new ApiResource(true, "Ticket marked as used successfully", null, 200, 'OK', ['WWW-Authenticate' => 'Bearer']);
+    return new ApiResource(true, "Ticket used successfully", null, 200, 'OK', ['WWW-Authenticate' => 'Bearer']);
 }
 
 }

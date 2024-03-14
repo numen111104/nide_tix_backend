@@ -36,7 +36,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //destinasi API
     Route::get('/destinasi', [TouristDestinationController::class, 'getAllDestinasi']);
     Route::get('/destinasi/{id}', [TouristDestinationController::class, 'getDestinasiById']);
-
     //ticket API
     Route::get('/info-ticket', [TicketController::class, 'getAllTicketInfo']);
     Route::post('/order-ticket', [TicketController::class, 'orderTicket']);
