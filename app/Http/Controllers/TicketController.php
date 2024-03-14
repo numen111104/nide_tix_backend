@@ -35,7 +35,7 @@ class TicketController extends Controller
         $ticket = new Ticket;
         $ticket->user_id = $request->user_id;
         $ticket->tourist_destination_id = $request->tourist_destination_id;
-        $ticket->booking_code = "NIDE-" . rand(1, 9) . strtoupper(Str::random(5)) . $ticket->user_id . $ticket->timestamps . rand(1, 9) . strtoupper(Str::random(2));
+        $ticket->booking_code = "NIDE-" . rand(1, 9) . strtoupper(Str::random(5)) . $ticket->user_id . now()->timestamp . rand(1, 9) . strtoupper(Str::random(2));
         $ticket->quantity = $request->quantity;
         $ticket->status = "unpaid";
 

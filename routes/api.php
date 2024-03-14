@@ -44,7 +44,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/cancel-ticket/{id}',[TicketController::class, 'cancelTicket']);
     //update ticket
     Route::put('/update-ticket/{ticket_id}', [TicketController::class, 'updateTicket']);
-    // Route::post('/scan-ticket', [TicketController::class, 'scanTicket']);
+    Route::put('/generate-booking-code/{ticket_id}', [TicketController::class, 'generateBookingCode']);
+
 
 
 });

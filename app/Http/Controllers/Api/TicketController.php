@@ -77,8 +77,6 @@ class TicketController extends Controller
     $ticket = Ticket::create([
         'user_id' => auth()->id(),
         'tourist_destination_id' => $request->tourist_destination_id,
-        'booking_code' => null, // Hapus jika tidak diperlukan
-        'is_used' => false,
         'quantity' => $request->quantity,
         'status' => "unpaid",
         'total_price' => $total_price,
@@ -103,8 +101,6 @@ class TicketController extends Controller
 
     return new ApiResource(true, "Ticket created successfully", $data, 201, 'Created', ['WWW-Authenticate' => 'Bearer']);
 }
-
-
     public function updateTicket(Request $request, $ticketId)
     {
         // Temukan tiket yang ingin diperbarui
@@ -175,6 +171,24 @@ class TicketController extends Controller
     return new ApiResource(true, "Ticket canceled successfully", null, 200, 'OK', ['WWW-Authenticate' => 'Bearer']);
 }
 
-
+public function generateBookingCode($ticketId)
+{
+    // Temukan tiket berdasarkan ID
+    $ticket = Ticket::find($ticketId);
+    // Periksa apakah tiket ditemukan
+    if (!$ticket) {
+        return new ApiResource(false, "Ticket not found", null, 404, 'Not Found', ['WWW-Authenticate' => 'Bearer']);
+    }
+    // Periksa apakah status tiket sudah "paid"
+    if ($ticket->status != "paid") {
+        return new ApiResource(false, "Ticket status is not paid yet", null, 400, 'Bad Request', ['WWW-Authenticate' => 'Bearer']);
+    }
+    // Generate booking code
+    $bookingCode = "NIDE-" . rand(1, 9) . strtoupper(Str::random(5)) . $ticket->user_id . now()->timestamp . rand(1, 9) . strtoupper(Str::random(2));
+    // Simpan booking code ke dalam tiket
+    $ticket->booking_code = $bookingCode;
+    $ticket->save();
+    return new ApiResource(true, "Booking code generated successfully", ['booking_code' => $bookingCode], 200, 'OK', ['WWW-Authenticate' => 'Bearer']);
+}
     
 }
