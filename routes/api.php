@@ -40,11 +40,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //ticket API
     Route::get('/info-ticket', [TicketController::class, 'getAllTicketInfo']);
     Route::post('/order-ticket', [TicketController::class, 'orderTicket']);
-
-    Route::post('/cancel-ticket/{id}',[TicketController::class, 'cancelTicket']);
+    Route::post('/cancel-ticket/{ticket_id}',[TicketController::class, 'cancelTicket']);
     //update ticket
     Route::put('/update-ticket/{ticket_id}', [TicketController::class, 'updateTicket']);
     Route::put('/generate-booking-code/{ticket_id}', [TicketController::class, 'generateBookingCode']);
+    Route::put('/used-ticket/{booking_code}', [TicketController::class, 'markTicketAsUsed']);
+
 
 
 
