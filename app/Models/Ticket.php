@@ -13,7 +13,10 @@ class Ticket extends Model
         "user_id",
         "tourist_destination_id",
         "booking_code",
-        "quantity",  
+        "is_used",
+        "quantity",
+        "status",
+        "total_price"  
     ];
 
     public function user() {

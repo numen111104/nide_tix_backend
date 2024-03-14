@@ -87,7 +87,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Ticket Price</label>
-                                <input type="text" class="form-control @error('ticket_price') is-invalid @enderror"
+                                <input type="number" class="form-control @error('ticket_price') is-invalid @enderror"
                                     name="ticket_price" value="{{ old('ticket_price') }}">
                                 @error('ticket_price')
                                     <div class="invalid-feedback">

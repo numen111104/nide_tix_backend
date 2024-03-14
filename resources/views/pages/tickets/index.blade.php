@@ -43,6 +43,7 @@
                                                 <th>Tourist Destination</th>
                                                 <th>Booking Code</th>
                                                 <th>Quantity</th>
+                                                <th>Total Price</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -53,6 +54,8 @@
                                                     <td>{{ $ticket->touristDestination->name }}</td>
                                                     <td>{{ $ticket->booking_code }}</td>
                                                     <td>{{ $ticket->quantity }}</td>
+                                                    <td>{{ $ticket->total_price == 0 ? 'Free' : 'Rp' . number_format($ticket->total_price, 0, ',', '.') }}
+                                                    </td>
                                                     <td>
                                                         <div class="d-flex justify-content-center">
                                                             <a href="{{ route('tickets.edit', $ticket->id) }}"
